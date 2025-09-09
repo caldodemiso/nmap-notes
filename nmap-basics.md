@@ -1,69 +1,80 @@
-#
-
 # 🔷 Nmap Notes
 
 # **Section 1: Network Scanning**
 
-## TCP/IP Networking:
+These notes summarize Section 1 of my LinkedIn Learning Nmap course.  
+They cover essential networking concepts (TCP/IP, ports, ICMP, and OSI layers) that Nmap builds on when scanning.
+
+---
+
+## TCP/IP Networking
 
 - **TCP/IP** = Transmission Control Protocol / Internet Protocol
-- **IP** transmits info across networks, provides addressing scheme, delivers packets from source to destination.
-- NETWORK LAYER PROTOCOL
-- Supports transport layer protocols that have higher responsibilities
+- **IP** transmits info across networks, provides addressing scheme, and delivers packets from source to destination.
+- Operates at the **Network Layer** of the OSI model.
+- Supports transport layer protocols that have higher responsibilities.
 
 **Two Main Transport Layer Protocols**
 
-- Transmission Control Protocol (TCP)
-- User Datagram Protocol (UDP)
+- **Transmission Control Protocol (TCP)**
+- **User Datagram Protocol (UDP)**
 
-**TCP** is responsible for the majority of network traffic
+### TCP
 
-- Connection oriented protocol (establishes connections between two systems before data is tranferred.)
-- Reliable protocol that guarantees delivery by having system acknowledge receipt of every packet.
-- Widely used by applicatons like email and websites.
-- Systems go through a "handshaking process" to create a connection before transmitting data (**Three-way Handshake**) 🤝.
-
-TCP packets include 🚩 **flags** 🚩 that identify packets
+- Responsible for the majority of network traffic.
+- **Connection-oriented** protocol (establishes connections before transferring data).
+- Reliable — guarantees delivery by requiring acknowledgements for every packet.
+- Common for email, web traffic, file transfers, etc.
+- Uses a **three-way handshake 🤝** to establish connections.
 
 **TCP Flags**
 
-- **SYN:** Identifies packets that are requesting a new connection (OPEN)
-- **FIN:** Identifies packets that are requesting the closure of an existing connection (CLOSE)
-- **ACK:** Used to acknowledge a SYN or FIN request.
+- **SYN:** Request to open a new connection.
+- **FIN:** Request to close an existing connection.
+- **ACK:** Acknowledges a SYN or FIN request.
 
 **Three-way Handshake 🤝**
 
-- first system sends SYN packet to other system to open connection
-- receiving system receives SYN packed and sends ACK and SYN packet to request a recipricol connection
-- fist system receives SYN/ACK packet and sends ACK packet to final destination, completing recipricol connection.
-- once this completes, the systems are open and can begin exchanging data
+1. First system sends a SYN packet to request a connection.
+2. Receiving system replies with SYN + ACK (acknowledge + reciprocal connection request).
+3. First system sends ACK back, completing the handshake.  
+   ➡ Connection is established, and data can flow.
 
-**UDP** Protocol is lightweight and does not use three-way handshake
+### UDP
 
-- Connectionless protocol that blindly sends data and hopes it get recieved.
-- Does not perform acknowlegements, therefore cannot guarantee delivery
-- Often used for applications like voice and video where guaranteed delivery of every packet isn't essential.
+- **Connectionless** protocol — just sends packets without handshakes.
+- Lightweight, but cannot guarantee delivery (no acknowledgements).
+- Often used for voice, video, or streaming where speed > guaranteed reliability.
 
-These protocols are known as the **OSI Model** by networking professionals
+---
 
-- **OSI** = Open Systems Interconnection
-- Describes networks as having 7 layers:
-  1. Physical Layer
-     - sends bits over the network using wires, radios & optics
-  2. Data Layer
-     - Transfers data between two nodes connected to the same physical network
-  3. Network Layer
-     - Expands networks to many different nodes
-     - **IP** works at this layer
-  4. Transport Layer
-     - creates connections between systems and transfers data in a _reliable_ manner
-     - TCP & UDP are transport layer protocols
-  5. Session Layer
-     - manages the exchange of communication between systems
-  6. Presentation Layer
-     - Translates data so that it may be transmitted on a network
-     - Describes how to represent a layer in bits and performs encryption and decryption.
-  7. Application Layer
-     - Determines how user interact with data using web browsers or other client applications
+## OSI Model
 
-## IP Addressing
+Networking professionals often describe TCP and UDP in relation to the **OSI Model**, which organizes communication into 7 layers:
+
+1. **Physical Layer**
+   - Transmits bits over wires, radios, or optics.
+2. **Data Link Layer**
+   - Transfers data between nodes on the same network segment.
+3. **Network Layer**
+   - Routes packets between multiple nodes and networks.
+   - **IP** works here.
+4. **Transport Layer**
+   - Ensures reliable connections between systems.
+   - **TCP & UDP** live here.
+5. **Session Layer**
+   - Manages sessions between applications.
+6. **Presentation Layer**
+   - Translates data formats; handles encryption/decryption.
+7. **Application Layer**
+   - Where users interact with data (e.g., web browsers, clients).
+
+---
+
+## 🔗 Nmap Tie-In
+
+- Nmap leverages **TCP flags (SYN, ACK, FIN)** during different scan types (`-sS`, `-sT`, etc.).
+- Understanding the **three-way handshake** helps explain how Nmap identifies open vs. closed ports.
+- Recognizing where **IP, TCP, and UDP** fit in the OSI model makes it easier to interpret scan results.
+
+---
